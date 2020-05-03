@@ -1,0 +1,14 @@
+/*ipadのよこはば　デカい*/
+@media (max-width: 1024px) {
+
+}
+
+/*iphonSX MAX の縦幅=>横にしてみたときの幅*/
+@media (max-width: 896px) {
+
+}
+
+/*iphonの縦, SXMAXが414とのこと*/
+@media (max-width: 450px) {
+    
+}

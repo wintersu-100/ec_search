@@ -1,0 +1,207 @@
+* {
+    color: #313131;
+    box-sizing: border-box;
+    margin: 0px;  /*こいつ...*/
+    font-family: Lato, Noto Sans JP;
+}
+
+
+.btn :hover {
+    opacity: 0.7;
+    box-shadow: none;
+    transition-duration: 0.4s;
+}
+
+.no_underline {
+    text-decoration: none;
+}
+
+/*ヘッダー*/
+header {
+    position: fixed;
+    z-index: 10;
+    width: 100vw;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.header-wrap {
+    font-family: Lato;
+    width: 98vw;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3vh;
+    letter-spacing: 2.8px;
+}
+
+/*ヘッダーロゴ左*/
+.header-logo {
+    font-size: 2em;
+    margin-left: 4vw;
+    padding: 1vh 2vh;
+}
+
+/*ヘッダー右側のかたまり*/
+.header-content {
+    margin-right: 2vw;
+    margin-top: 1vh;
+    font-size: 1.1em;
+}
+
+/*ヘッダー右側・個別のやつ*/
+.header-content {
+    float: left;
+    padding: 2vh 3vh;
+}
+
+/*トップ*/
+.top-wrap {
+    width: 100vw;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    font-family: Lato;
+    font-size: 6em;
+    text-align: center;
+    max-width: 100%;
+    letter-spacing: 2.8px;
+}
+
+/*メイン*/
+.main-wrap, .contact-wrap {
+    margin: 4em 9em;
+}
+
+.service-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.article-title {
+    letter-spacing: 2.8px;
+    font-size: 4.5em;
+    padding: 2em 0em 1em;
+}
+
+.article-contents {
+    display: flex;
+    width: 80vw;
+}
+
+.service-contents {
+    justify-content: space-around;
+}
+
+.service-article h3 {
+    margin-bottom: 1em;
+    font-size: 1.6em;
+}
+
+.service-article p {
+    width: 25vw;
+}
+
+.service-url {
+    max-width: 25vw;
+    font-size: 14px;
+    font-weight: 400;
+    height: 24px;
+    margin: 12px 0px 0px 0px;
+    overflow-wrap: break-word;
+}
+
+.service-image img{
+    width: 40vw;
+    /*box-shadow: 2px 2px 3px #999;*/
+    /*box-shadow: 1px 1px 4px 1.4px #999999f5;*/
+    /*: 1 3 8 0 rgba(0,0,0,0.2)がいい感じかも*/
+
+
+}
+
+.article-content {
+    margin-right: 2em;
+    margin-left: 1em;
+}
+
+img {
+    border-radius: 6px;
+}
+
+/*今2個の塊を縦に３つ並べてる。そのため縦が揃ってないクソ　めんどいので空白入れて対応*/
+.philosophy-lists {
+    display: flex;
+    flex-direction: column;
+}
+
+.philosophy-list {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2em;
+
+}
+
+.philosophy-list img {
+    width: 40vw;
+}
+
+/* むだぽい　あとで消していい
+.philosophies {
+    display: flex;
+    justify-content: center;
+}
+*/
+
+.philosophy-list h4 {
+    font-size: 2em;
+    padding-top: 12vw;
+}
+
+/*Contact*/
+.contact-title {
+    padding-top: 0.5em;
+}
+.contact-contents {
+    display: flex;
+    justify-content: space-around;
+}
+
+.contact-sentence {
+    padding: 1em 0em 0.4em;
+}
+
+.contact-btn {
+    background-color: #313131;
+    color: white;
+    font-size: 2em;
+    padding: 0.2em 1.8em 0.4em;
+    letter-spacing: 2.8px;
+    border-radius: 1em;
+}
+
+.contact-btn :hover {
+    background-color: white;
+}
+
+/*フッター*/
+.footer-wrap {
+    width: 100vw;
+    height: 2.5em;
+    margin-top: 8em;
+    text-align: center;
+}
+
+.footer-contents p {
+    font-size: 0.8em;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.footer-s {
+    font-family: Noto Sans JP;
+    font-size: 0.5em;
+}
+
