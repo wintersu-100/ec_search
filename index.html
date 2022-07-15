@@ -2,18 +2,18 @@
 
 <html>
   <head>
-    <link rel="stylesheet" href="practice.css">
+    <!--<link rel="stylesheet" href="style_map.css">-->
+    <link rel="stylesheet" href="stylesheet.css">
+
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
     <link href="https://fonts.googleapis.com/css?family=Lato:700,900|Noto+Sans+JP:400,700&display=swap&subset=japanese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
-    <title>れんしう</title>
-
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script type="module" src="./index.js"></script>
-    <script type="module" src="./contact/contact.js"></script>
-    <script type="module" src="./contact/contact_button.js"></script>
-<!--<script type="module" src="node_modules/react/cjs/react.development.js"></script>-->
+    <title>ec_pill_search</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    
 
   </head>
 
@@ -26,25 +26,26 @@
         <div class="header-wrap">
 
             <div class="header-logo btn">
-                <h3><a class="no_underline" href="#top">MilkTea., inc</a></h3>
+                <h3><a class="no_underline" href="#top">EC Search</a></h3>
             </div>
 
             <div class="header-contents">
             
                 <div class="header-content btn">
-                    <a class="no_underline" href="#service">service</a>
+                    <a class="no_underline" href="#flow">処方までの流れ</a>
                 </div>
         
                 <div class="header-content btn">
-                    <a class="no_underline" href="#job">job</a>
+                    <a class="no_underline" href="#address">エリア検索</a>
                 </div>
         
-                <div class="header-content btn">
-                    <a class="no_underline" href="#philosophy">Philosophy</a>
+                <!--避妊薬の種類は作成後公開、今は隠す-->
+                <div class="header-content btn" hidden>
+                    <a class="no_underline" href="#kinds">避妊薬の種類</a>
                 </div>
 
                 <div class="header-content btn">
-                    <a class="no_underline" href="#contact">Contact</a>
+                    <a class="no_underline" href="#contact">お問い合わせ</a>
                 </div>
         
             </div>
@@ -54,10 +55,10 @@
 
      <!--トップ　タイトルのとこ-->
     
-     <div id="top" class="top">
+    <div id="top" class="top" hidden>
         <div class="top-wrap">
             <div class="logo">
-                <h3>MilkTea., inc</h3>
+                <h3>EC Search</h3>
             </div>
         </div>
     </div>
@@ -67,23 +68,25 @@
 
         <div class="main-wrap">
 
-            <div id="service" class="sevice-container">
+            <div id="flow" class="sevice-container">
                 <div class="article-title">
-                    <h3>Service</h3>
+                    <h3>処方までの流れ</h3>
                 </div>
                     
-                <div class="article-contents service-contents">
-                    <div class="service-article article-content">
-                        <h3>題名</h3>
+                <div class="article-contents flow-contents">
+                    <div class="flow-article article-content">
+                        <h3>まずは医師による診察</h3>
                         <p>
-                            ないよう1、ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-                            <br>
+                            緊急避妊薬の処方を受けるためには医師の診察が必要になります。対応している診療所ではオンラインによる診察を選択できます。
+                            <br>その後、処方箋を受け取り、薬局で薬を受け取ります（病院で購入できる場合もあります）。定められた研修を受けた薬剤師がいる薬局のみ薬を渡すことができます。本サイトに掲載している薬局であっても、在庫の欠品/薬剤師の不在などがあるので事前に電話などで確認しておくと確実です。
+
+                        
                         </p>
-                        <div class="service-url">
+                        <div class="flow-url">
                             <a href="#!" class="no_underline">milk_tea_web_application/practice.html</a>
                         </div>
                     </div>
-                    <div class="service-image article-content">
+                    <div class="flow-image article-content">
                         <a class="btn" href="#!">
                             <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641727-d6226c80-2ce3-11ea-84fd-ef039ea4bbba.png" alt="Gazou1">
                         </a>
@@ -92,35 +95,213 @@
             </div>
 
 
-            <div id="job">
+            <div id="address">
                 <div class="article-title">
-                    <h3>Job</h3>
+                    <h3>病院・薬局検索</h3>
                 </div>
 
-                <div class="article-contents">
-                    <p>　　　ないよう2</p>
+                <div class="address-contents">
+
+                    <ul class="tab">
+                        <li><a href="#lunch">病院（対面）</a></li>
+                        <li><a href="#drink">病院（オンライン）</a></li>
+                        <li><a href="#dinner">薬局</a></li>
+                    </ul>
+
+                    <div id="lunch" class="area">
+                        <div class="table_contents">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>北海道</th>
+                                        <td>
+                                            <a href="#">北海道</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>東北</th>
+                                        <td>
+                                            <a href="#">青森</a> <a href="#">岩手</a> <a href="#">秋田</a> <a href="#">宮城</a> <a href="#">山形</a> <a href="#">福島</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>関東</th>
+                                        <td>
+                                            <a href="#">茨城</a> <a href="#">栃木</a> <a href="#">群馬</a> <a href="#">埼玉</a> <a href="#">千葉</a> <a href="#">神奈川</a> <a href="#">東京</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>中部</th>
+                                        <td>
+                                            <a href="#">新潟</a> <a href="#">富山</a> <a href="#">石川</a> <a href="#">福井</a> <a href="#">山梨</a> <a href="#">長野</a> <a href="#">岐阜</a> <a href="#">静岡</a> <a href="#">愛知</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>近畿</th>
+                                        <td>
+                                            <a href="#">三重</a> <a href="#">滋賀</a> <a href="#">京都</a> <a href="#">大阪</a> <a href="#">兵庫</a> <a href="#">奈良</a> <a href="#">和歌山</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>中国</th>
+                                        <td>
+                                            <a href="#">鳥取</a> <a href="#">島根</a> <a href="#">岡山</a> <a href="#">広島</a> <a href="#">山口</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>四国</th>
+                                        <td>
+                                            <a href="#">徳島</a> <a href="#">香川</a> <a href="#">愛媛</a> <a href="#">高知</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>九州</th>
+                                        <td>
+                                            <a href="#">福岡</a> <a href="#">佐賀</a> <a href="#">長崎</a> <a href="#">熊本</a> <a href="#">大分</a> <a href="#">宮崎</a> <a href="#">鹿児島</a> <a href="#">沖縄</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="drink" class="area">
+                        <div class="table_contents">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>北海道</th>
+                                        <td>
+                                            <a href="#">北海道</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>東北</th>
+                                        <td>
+                                            <a href="#">青森</a> <a href="#">岩手</a> <a href="#">秋田</a> <a href="#">宮城</a> <a href="#">山形</a> <a href="#">福島</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>関東</th>
+                                        <td>
+                                            <a href="#">茨城</a> <a href="#">栃木</a> <a href="#">群馬</a> <a href="#">埼玉</a> <a href="#">千葉</a> <a href="#">神奈川</a> <a href="#">東京</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>中部</th>
+                                        <td>
+                                            <a href="#">新潟</a> <a href="#">富山</a> <a href="#">石川</a> <a href="#">福井</a> <a href="#">山梨</a> <a href="#">長野</a> <a href="#">岐阜</a> <a href="#">静岡</a> <a href="#">愛知</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>近畿</th>
+                                        <td>
+                                            <a href="#">三重</a> <a href="#">滋賀</a> <a href="#">京都</a> <a href="#">大阪</a> <a href="#">兵庫</a> <a href="#">奈良</a> <a href="#">和歌山</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>中国</th>
+                                        <td>
+                                            <a href="#">鳥取</a> <a href="#">島根</a> <a href="#">岡山</a> <a href="#">広島</a> <a href="#">山口</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>四国</th>
+                                        <td>
+                                            <a href="#">徳島</a> <a href="#">香川</a> <a href="#">愛媛</a> <a href="#">高知</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>九州</th>
+                                        <td>
+                                            <a href="#">福岡</a> <a href="#">佐賀</a> <a href="#">長崎</a> <a href="#">熊本</a> <a href="#">大分</a> <a href="#">宮崎</a> <a href="#">鹿児島</a> <a href="#">沖縄</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="dinner" class="area">
+                        <div class="table_contents">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>北海道</th>
+                                        <td>
+                                            <a href="#">北海道</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>東北</th>
+                                        <td>
+                                            <a href="#">青森</a> <a href="#">岩手</a> <a href="#">秋田</a> <a href="#">宮城</a> <a href="#">山形</a> <a href="#">福島</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>関東</th>
+                                        <td>
+                                            <a href="#">茨城</a> <a href="#">栃木</a> <a href="#">群馬</a> <a href="#">埼玉</a> <a href="#">千葉</a> <a href="#">神奈川</a> <a href="#">東京</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>中部</th>
+                                        <td>
+                                            <a href="#">新潟</a> <a href="#">富山</a> <a href="#">石川</a> <a href="#">福井</a> <a href="#">山梨</a> <a href="#">長野</a> <a href="#">岐阜</a> <a href="#">静岡</a> <a href="#">愛知</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>近畿</th>
+                                        <td>
+                                            <a href="#">三重</a> <a href="#">滋賀</a> <a href="#">京都</a> <a href="#">大阪</a> <a href="#">兵庫</a> <a href="#">奈良</a> <a href="#">和歌山</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>中国</th>
+                                        <td>
+                                            <a href="#">鳥取</a> <a href="#">島根</a> <a href="#">岡山</a> <a href="#">広島</a> <a href="#">山口</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>四国</th>
+                                        <td>
+                                            <a href="#">徳島</a> <a href="#">香川</a> <a href="#">愛媛</a> <a href="#">高知</a>
+                                        </td>
+                                    </tr>
+                                        <tr>
+                                        <th>九州</th>
+                                        <td>
+                                            <a href="#">福岡</a> <a href="#">佐賀</a> <a href="#">長崎</a> <a href="#">熊本</a> <a href="#">大分</a> <a href="#">宮崎</a> <a href="#">鹿児島</a> <a href="#">沖縄</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div id="philosophy">
+            <!--避妊薬の種類は作成後公開、今は隠す ヘッダーも-->
+            <div id="kinds" hidden>
                 <div class="article-title">
-                    <h3>Philosophy</h3>
+                    <h3>緊急避妊薬の種類</h3>
                 </div>
     
-                <div class="article-contents philosophy-lists">
-                    <div class="philosophy-list">
+                <div class="article-contents kinds-lists">
+                    <div class="kinds-list">
                         <div class="philosophies">
-                            <h4>1. メゲない　　</h4><!--この空白により縦が揃って見える神業、今は消さない-->
+                            <h4>1. メゲない　</h4><!--この空白により縦が揃って見える神業、今は消さない-->
                         </div>
                         <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641742-efc3b400-2ce3-11ea-9f63-381a4a4e3e68.PNG" alt="Ganko_1">
                     </div>
-                    <div class="philosophy-list">
+                    <div class="kinds-list">
                         <div class="philosophies">
                             <h4>2. ショゲない　</h4>
                         </div>
                         <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641740-ef2b1d80-2ce3-11ea-9a4d-a40a74f5fec8.PNG" alt="Ganko_2">
                     </div>
-                    <div class="philosophy-list">
+                    <div class="kinds-list">
                         <div class="philosophies">
                             <h4>3. ないちゃだめ</h4>
                         </div>
@@ -141,17 +322,15 @@
 
             <div class="article-contents contact-contents">
                 <div class="contact-content">
-                    <p class="contact-sentence">文言Reactを使いたい</p>
+                    <h3 class="contact-sentence">Mail: zassouXXX@gmail.com</h3>
                     
                 </div>
-                <div class="contact-content">
+                <div class="contact-content" hidden>
                     <div id="contact_button_container">
 
                     </div>
-                    <a href="#!" class="contact-btn contact-opacity　btn no_underline">contact</a>
-                    <div id="root"></div>
-                    <script type="module" src="./index.js"></script>
-                    </div>
+                    <a href="#!" class="contact-btn contact-opacity btn no_underline">contact</a>
+                   
             </div>
 
         </div>
@@ -161,14 +340,50 @@
     <footer>
         <div class="footer-wrap">
             <div class="footer-contents">
-                <p><span class="footer-s">Made by </span>MilkTea.</p>
+                <p><span class="footer-s">Made by </span>Zasso. / Akili.</p>
             </div>
         </div>
     </footer>
-
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
    
+    <script>
+        function GethashID (hashIDName){
+            if(hashIDName){
+                //タブ設定
+                $('.tab li').find('a').each(function() { //タブ内のaタグ全てを取得
+                    var idName = $(this).attr('href'); //タブ内のaタグのリンク名（例）#lunchの値を取得	
+                    if(idName == hashIDName){ //リンク元の指定されたURLのハッシュタグ（例）http://example.com/#lunch←この#の値とタブ内のリンク名（例）#lunchが同じかをチェック
+                        var parentElm = $(this).parent(); //タブ内のaタグの親要素（li）を取得
+                        $('.tab li').removeClass("active"); //タブ内のliについているactiveクラスを取り除き
+                        $(parentElm).addClass("active"); //リンク元の指定されたURLのハッシュタグとタブ内のリンク名が同じであれば、liにactiveクラスを追加
+                        //表示させるエリア設定
+                        $(".area").removeClass("is-active"); //もともとついているis-activeクラスを取り除き
+                        $(hashIDName).addClass("is-active"); //表示させたいエリアのタブリンク名をクリックしたら、表示エリアにis-activeクラスを追加	
+                    }
+                });
+            }
+        }
+
+        //タブをクリックしたら
+        $('.tab a').on('click', function() {
+            var idName = $(this).attr('href'); //タブ内のリンク名を取得	
+            GethashID (idName);//設定したタブの読み込みと
+            return false;//aタグを無効にする
+        });
+
+
+        // 上記の動きをページが読み込まれたらすぐに動かす
+        $(window).on('load', function () {
+            $('.tab li:first-of-type').addClass("active"); //最初のliにactiveクラスを追加
+            $('.area:first-of-type').addClass("is-active"); //最初の.areaにis-activeクラスを追加
+            var hashName = location.hash; //リンク元の指定されたURLのハッシュタグを取得
+            GethashID (hashName);//設定したタブの読み込み
+        });
+
+    </script>
+
   </body>
 </html>
 

@@ -19,6 +19,7 @@
 /*ヘッダー*/
 header {
     position: fixed;
+    top: 0px;
     z-index: 10;
     width: 100vw;
     background-color: rgba(255, 255, 255, 0.5);
@@ -75,7 +76,7 @@ header {
     margin: 4em 9em;
 }
 
-.service-container {
+.flow-container {
     display: flex;
     flex-direction: row;
 }
@@ -91,20 +92,20 @@ header {
     width: 80vw;
 }
 
-.service-contents {
+.flow-contents {
     justify-content: space-around;
 }
 
-.service-article h3 {
+.flow-article h3 {
     margin-bottom: 1em;
     font-size: 1.6em;
 }
 
-.service-article p {
+.flow-article p {
     width: 25vw;
 }
 
-.service-url {
+.flow-url {
     max-width: 25vw;
     font-size: 14px;
     font-weight: 400;
@@ -113,7 +114,7 @@ header {
     overflow-wrap: break-word;
 }
 
-.service-image img{
+.flow-image img{
     width: 40vw;
     /*box-shadow: 2px 2px 3px #999;*/
     /*box-shadow: 1px 1px 4px 1.4px #999999f5;*/
@@ -132,30 +133,23 @@ img {
 }
 
 /*今2個の塊を縦に３つ並べてる。そのため縦が揃ってないクソ　めんどいので空白入れて対応*/
-.philosophy-lists {
+.kinds-lists {
     display: flex;
     flex-direction: column;
 }
 
-.philosophy-list {
+.kinds-list {
     display: flex;
     justify-content: space-around;
     margin-bottom: 2em;
 
 }
 
-.philosophy-list img {
+.kinds-list img {
     width: 40vw;
 }
 
-/* むだぽい　あとで消していい
-.philosophies {
-    display: flex;
-    justify-content: center;
-}
-*/
-
-.philosophy-list h4 {
+.kinds-list h4 {
     font-size: 2em;
     padding-top: 12vw;
 }
@@ -205,3 +199,56 @@ img {
     font-size: 0.5em;
 }
 
+/******* タブメニュー *******/
+
+.tab{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tab li {
+	list-style:none
+}
+
+.tab li a{
+	display: block;
+	background:#ddd;
+	margin:0 2px;
+	padding:10px 20px;
+	text-decoration: none;
+}
+
+/*liにactiveクラスがついた時の形状*/
+.tab li.active a{
+	background:#fff;
+}
+
+
+/*エリアの表示非表示と形状*/
+.area {
+	display: none;/*はじめは非表示*/
+	opacity: 0;/*透過0*/
+	background: #fff;
+	padding:50px 20px;
+}
+
+/*areaにis-activeというクラスがついた時の形状*/
+.area.is-active {
+    display: block;/*表示*/
+    animation-name: displayAnime;/*ふわっと表示させるためのアニメーション*/
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes displayAnime{
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.table_contents table tr {
+	padding: 1em;
+}
