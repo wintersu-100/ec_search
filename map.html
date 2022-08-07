@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!--<link rel="stylesheet" href="style_map.css">-->
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+    <link href="https://fonts.googleapis.com/css?family=Lato:700,900|Noto+Sans+JP:400,700&display=swap&subset=japanese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+
+    <title>ec_pill_search</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/9.9.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/9.9.0/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/9.9.0/firebase-analytics-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script type="module">
+      import { initializeApp } from "firebase/app";
+      import { getAnalytics } from "firebase/analytics";
+      import { getDatabase } from "firebase/database";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyA6LUllcGI2_cPrJTZFEK87em6ebJe_9wI",
+        authDomain: "ec-search-12824.firebaseapp.com",
+        databaseURL: "https://ec-search-12824-default-rtdb.firebaseio.com",
+        projectId: "ec-search-12824",
+        storageBucket: "ec-search-12824.appspot.com",
+        messagingSenderId: "455613901452",
+        appId: "1:455613901452:web:77e7bad16733fdbafbe9a9",
+        measurementId: "G-FHS6S2YHS2"
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      const analytics = getAnalytics(app);
+    </script>
+    
+    <style>
+    /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+    #map {height: 400px;width: 600px;}
+    </style>
+        
+  </head>
+
+  <body>
+      
+     <!--ここから本編test-->
+
+     <!--ヘッダー-->
+    <header>
+        <div class="header-wrap">
+
+            <div class="header-logo btn">
+                <h3><a class="no_underline" href="#top">EC Search</a></h3>
+            </div>
+
+            <div class="header-contents">
+            
+                <div class="header-content btn">
+                    <a class="no_underline" href="#flow">処方までの流れ</a>
+                </div>
+        
+                <div class="header-content btn">
+                    <a class="no_underline" href="#address">エリア検索</a>
+                </div>
+        
+                <!--避妊薬の種類は作成後公開、今は隠す-->
+                <div class="header-content btn" hidden>
+                    <a class="no_underline" href="#kinds">避妊薬の種類</a>
+                </div>
+
+                <div class="header-content btn">
+                    <a class="no_underline" href="#contact">お問い合わせ</a>
+                </div>
+        
+            </div>
+
+        </div>
+    </header>
+
+     <!--トップ　タイトルのとこ-->
+    <div id="top" class="top" hidden>
+        <div class="top-wrap">
+            <div class="logo">
+                <h3>EC Search</h3>
+            </div>
+        </div>
+    </div>
+    
+     <!--メイン-->
+    <div class="main">
+
+        <div class="main-wrap">
+
+            <div id="flow" class="sevice-container">
+                <div class="article-title">
+                    <h3 id="map_title"></h3>
+                </div>
+            </div>
+            
+            <div id="map">
+            </div>
+
+            <!--避妊薬の種類は作成後公開、今は隠す ヘッダーも-->
+            <div id="kinds" hidden>
+                <div class="article-title">
+                    <h3>緊急避妊薬の種類</h3>
+                </div>
+    
+                <div class="article-contents kinds-lists">
+                    <div class="kinds-list">
+                        <div class="philosophies">
+                            <h4>1. メゲない　</h4><!--この空白により縦が揃って見える神業、今は消さない-->
+                        </div>
+                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641742-efc3b400-2ce3-11ea-9f63-381a4a4e3e68.PNG" alt="Ganko_1">
+                    </div>
+                    <div class="kinds-list">
+                        <div class="philosophies">
+                            <h4>2. ショゲない　</h4>
+                        </div>
+                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641740-ef2b1d80-2ce3-11ea-9a4d-a40a74f5fec8.PNG" alt="Ganko_2">
+                    </div>
+                    <div class="kinds-list">
+                        <div class="philosophies">
+                            <h4>3. ないちゃだめ</h4>
+                        </div>
+                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641741-efc3b400-2ce3-11ea-986c-4623599f70c3.PNG" alt="Ganko_3">
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+
+    </div>
+
+    <div id="contact">
+        <div class="contact-wrap">
+            <div class="article-title contact-title">
+                <h3>Contact</h3>
+            </div>
+
+            <div class="article-contents contact-contents">
+                <div class="contact-content">
+                    <h3 class="contact-sentence">Mail: zassouXXX@gmail.com</h3>
+                    
+                </div>
+                <div class="contact-content" hidden>
+                    <div id="contact_button_container">
+
+                    </div>
+                    <a href="#!" class="contact-btn contact-opacity btn no_underline">contact</a>
+                   
+            </div>
+
+        </div>
+    </div>
+
+    <!--フッター-->
+    <footer>
+        <div class="footer-wrap">
+            <div class="footer-contents">
+                <p><span class="footer-s">Made by </span>Zasso. / Akili.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        var map;
+        // URLを取得
+        const url = new URL(window.location.href);
+        // URLSearchParamsオブジェクトを取得
+        const params = url.searchParams;
+        // パラメータから「username」を取得
+        const map_p = params.get("map");
+        const pref_p=params.get("pref");
+
+        if (map_p=="hsp_off"){
+            document.getElementById('map_title').innerHTML = "病院検索（対面診療）" ;
+        }else if(map_p=="hsp_on"){
+            document.getElementById('map_title').innerHTML = "病院検索（オンライン診療）" ;
+        }else{
+            document.getElementById('map_title').innerHTML = "薬局検索" ;
+        }
+    
+        const loadEl = document.querySelector('#load');
+    
+        function initMap() {
+          firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
+     
+            const pref_data=snapshot.val();
+            var lati =pref_data.lat;
+            var lngi =pref_data.lng;
+    
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: new google.maps.LatLng( lati, lngi, false ),
+              zoom:9.7
+            });
+    
+          });
+    
+          if(map_p=="hsp_off" || map_p=="hsp_on"){
+            find_hsp();
+          }else{
+            find_pha();
+          }
+    
+        }      
+    
+        function find_hsp(){
+          firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snapshot => {
+            
+            //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
+            var infowindow = new google.maps.InfoWindow();
+            //PlacesService のインスタンスの生成（引数に map を指定）
+            var service = new google.maps.places.PlacesService(map);
+    
+            var i=0;
+    
+            snapshot.forEach(function(childNodes){ 
+              setTimeout(mapping.bind(null, childNodes.val()), 300*i);
+              i++;
+            });    
+               
+            function mapping(df){
+              service.findPlaceFromQuery({
+                query: df.name+" "+pref_p,
+                fields: ['geometry', 'place_id']
+              }, function(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                  createMarker(results[0]);
+                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
+                  setTimeout(mapping.bind(null, df), 1000);
+                }
+              });
+            }
+    
+            function createMarker(place) {
+              //var placeLoc = place.geometry.location;
+              var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location  //results[i].geometry.location
+              });          
+    
+              marker.addListener('click', function() {
+                service.getDetails({
+                  placeId: place.place_id,
+                  fields: ['name',
+                           'adr_address',  
+                           'url',
+                           'opening_hours',
+                           'formatted_phone_number',
+                           'website']
+                }, function(req, res) {
+                  if (res == google.maps.places.PlacesServiceStatus.OK) {
+    
+                    var place_name=req.name;
+                    var place_add=req.adr_address.substr(req.adr_address.indexOf('、') + 1);
+                    var place_open="";
+                    var place_phone="";
+                    var place_url=req.website;
+    
+                    place_photo=req.photo;
+                    place_open=req.opening_hours.weekday_text;
+                    place_phone=req.formatted_phone_number;
+                    if(place_url==undefined){
+                      place_url=req.url;
+                    }
+    
+                    var content=`
+                    <div style="margin:20px; margin-bottom:20px;">
+                      <h3><a href=${place_url}>${place_name}</a></h3>
+                      <p><b>住所:</b>${place_add}</p>
+                      <p><b>電話番号:</b>${place_phone}</p>
+                      <p><b>開業時間:</b><br/>
+                        ${place_open[0]}<br/>
+                        ${place_open[1]}<br/>
+                        ${place_open[2]}<br/>
+                        ${place_open[3]}<br/>
+                        ${place_open[4]}<br/>
+                        ${place_open[5]}<br/>
+                        ${place_open[6]}<br/>
+                        </p>
+                    </div>
+                    `;
+    
+                    infowindow.setContent(content);  //results[i].name
+                  }
+                });
+                
+                infowindow.open(map, this);
+                
+              });
+            }
+          }); 
+        }    
+    
+        function find_pha(){
+          firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snapshot => {
+            
+            //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
+            var infowindow = new google.maps.InfoWindow();
+            //PlacesService のインスタンスの生成（引数に map を指定）
+            var service = new google.maps.places.PlacesService(map);
+    
+            var i=0;
+    
+            snapshot.forEach(function(childNodes){ 
+              setTimeout(mapping.bind(null, childNodes.val()), 300*i);
+              i++;
+            });    
+               
+            function mapping(df){
+              service.findPlaceFromQuery({
+                query: pref_p+" "+df.name+" "+df.add,
+                fields: ['geometry', 'place_id']
+              }, function(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                  createMarker(results[0]);
+                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
+                  setTimeout(mapping.bind(null, df), 1000);
+                }
+              });
+            }
+    
+            function createMarker(place) {
+              //var placeLoc = place.geometry.location;
+              var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location  //results[i].geometry.location
+              });          
+    
+              marker.addListener('click', function() {
+                service.getDetails({
+                  placeId: place.place_id,
+                  fields: ['name',
+                           'adr_address',  
+                           'url',
+                           'opening_hours',
+                           'formatted_phone_number',
+                           'website']
+                }, function(req, res) {
+                  if (res == google.maps.places.PlacesServiceStatus.OK) {
+    
+                    var place_name=req.name;
+                    var place_add=req.adr_address.substr(req.adr_address.indexOf('、') + 1);
+                    var place_open="";
+                    var place_phone="";
+                    var place_url=req.website;
+    
+                    place_photo=req.photo;
+                    place_open=req.opening_hours.weekday_text;
+                    place_phone=req.formatted_phone_number;
+                    if(place_url==undefined){
+                      place_url=req.url;
+                    }
+    
+                    var content=`
+                    <div style="margin:20px; margin-bottom:20px;">
+                      <h3><a href=${place_url}>${place_name}</a></h3>
+                      <p><b>住所:</b>${place_add}</p>
+                      <p><b>電話番号:</b>${place_phone}</p>
+                      <p><b>開業時間:</b><br/>
+                        ${place_open[0]}<br/>
+                        ${place_open[1]}<br/>
+                        ${place_open[2]}<br/>
+                        ${place_open[3]}<br/>
+                        ${place_open[4]}<br/>
+                        ${place_open[5]}<br/>
+                        ${place_open[6]}<br/>
+                        </p>
+                    </div>
+                    `;
+    
+                    infowindow.setContent(content);  //results[i].name
+                  }
+                });
+                
+                infowindow.open(map, this);
+                
+              });
+            }
+    
+          });
+        }
+    
+        try {
+            let app = firebase.app();
+            let features = [
+                'database', 
+                'analytics', 
+            ].filter(feature => typeof app[feature] === 'function');
+            loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+            console.error(e);
+            loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        }
+          
+        </script>    
+        <script src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyD6hZ942p4MWPSCEYnoUaCqU_3tMf_V7P8&callback=initMap&libraries=places" async defer ></script>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+   
+    <script>
+        function GethashID (hashIDName){
+            if(hashIDName){
+                //タブ設定
+                $('.tab li').find('a').each(function() { //タブ内のaタグ全てを取得
+                    var idName = $(this).attr('href'); //タブ内のaタグのリンク名（例）#lunchの値を取得	
+                    if(idName == hashIDName){ //リンク元の指定されたURLのハッシュタグ（例）http://example.com/#lunch←この#の値とタブ内のリンク名（例）#lunchが同じかをチェック
+                        var parentElm = $(this).parent(); //タブ内のaタグの親要素（li）を取得
+                        $('.tab li').removeClass("active"); //タブ内のliについているactiveクラスを取り除き
+                        $(parentElm).addClass("active"); //リンク元の指定されたURLのハッシュタグとタブ内のリンク名が同じであれば、liにactiveクラスを追加
+                        //表示させるエリア設定
+                        $(".area").removeClass("is-active"); //もともとついているis-activeクラスを取り除き
+                        $(hashIDName).addClass("is-active"); //表示させたいエリアのタブリンク名をクリックしたら、表示エリアにis-activeクラスを追加	
+                    }
+                });
+            }
+        }
+
+        //タブをクリックしたら
+        $('.tab a').on('click', function() {
+            var idName = $(this).attr('href'); //タブ内のリンク名を取得	
+            GethashID (idName);//設定したタブの読み込みと
+            return false;//aタグを無効にする
+        });
+
+
+        // 上記の動きをページが読み込まれたらすぐに動かす
+        $(window).on('load', function () {
+            $('.tab li:first-of-type').addClass("active"); //最初のliにactiveクラスを追加
+            $('.area:first-of-type').addClass("is-active"); //最初の.areaにis-activeクラスを追加
+            var hashName = location.hash; //リンク元の指定されたURLのハッシュタグを取得
+            GethashID (hashName);//設定したタブの読み込み
+        });
+
+    </script>
+
+  </body>
+</html>
+
+
