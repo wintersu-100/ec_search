@@ -51,7 +51,10 @@
     
     <style>
     /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-    #map {height: 400px;width: 600px;}
+    #map {height: 400px;
+          width: 600px;
+          text-align : center
+        }
     </style>
         
   </head>
@@ -189,11 +192,11 @@
         const pref_p=params.get("pref");
 
         if (map_p=="hsp_off"){
-            document.getElementById('map_title').innerHTML = "病院検索（対面診療）" ;
+            document.getElementById('map_title').innerHTML = "病院（対面）" ;
         }else if(map_p=="hsp_on"){
-            document.getElementById('map_title').innerHTML = "病院検索（オンライン診療）" ;
+            document.getElementById('map_title').innerHTML = "病院（オンライン）" ;
         }else{
-            document.getElementById('map_title').innerHTML = "薬局検索" ;
+            document.getElementById('map_title').innerHTML = "薬局" ;
         }
     
         const loadEl = document.querySelector('#load');
