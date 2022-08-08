@@ -51,9 +51,8 @@
     
     <style>
     /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-    #map {height: 400px;
-          width: 600px;
-          text-align : center
+    #map {height: 500px;
+          width: 800px;
         }
     </style>
         
@@ -73,11 +72,11 @@
 
             <div class="header-contents">
             
-                <div class="header-content btn">
+                <div class="header-content btn" hidden>
                     <a class="no_underline" href="#flow">処方までの流れ</a>
                 </div>
         
-                <div class="header-content btn">
+                <div class="header-content btn" >
                     <a class="no_underline" href="#address">エリア検索</a>
                 </div>
         
@@ -109,14 +108,14 @@
 
         <div class="main-wrap">
 
-            <div id="flow" class="sevice-container">
+            <div id="address" class="sevice-container">
                 <div class="article-title">
                     <h3 id="map_title"></h3>
                 </div>
             </div>
             
-            <div id="map">
-            </div>
+            <div style="display: block; margin: auto;" id="map"></div>
+            <div style="text-align: center;"><p>※読み込みに時間がかかる場合がございます。</p></div>
 
             <!--避妊薬の種類は作成後公開、今は隠す ヘッダーも-->
             <div id="kinds" hidden>
