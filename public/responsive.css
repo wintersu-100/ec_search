@@ -1,14 +1,114 @@
-/*ipadのよこはば　デカい*/
+/* large ipadのよこはば　デカい*/
 @media (max-width: 1024px) {
 
+    /* ヘッダー全体*/
+    .header-wrap {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* ヘッダー右コンテンツそれぞれ*/
+    .header-content {
+        margin: 0;
+        padding: 0vh 2vh;
+    }
+
+    /* セクションのタイトル*/
+    .article-title {
+        font-size: 3em;
+        padding: 1.5em 0em 1em;
+    }
 }
 
-/*iphonSX MAX の縦幅=>横にしてみたときの幅*/
+/* mideam iphonSX MAX の縦幅=>横にしてみたときの幅*/
 @media (max-width: 896px) {
 
+    /* 一番上ヘッダー上タイトル　クラス名変えたほうがいい*/
+    .header-logo {
+        font-size: 1.5em;
+    }
+
+    /*ヘッダー右コンテンツのかたまり*/
+    .header-contents {
+        
+    }
+
+    /*ヘッダー右コンテンツそれぞれ*/
+    .header-content {
+        margin: 0;
+        padding: 0vh 1vh;
+        font-size: 1em;
+        letter-spacing: 1.5;
+    }
+
+    .header-flow {
+        display: none;
+    }
+
+     /* セクションのタイトル*/
+     .article-title {
+        font-size: 1.8em;
+        padding: 1.5em 0em 1em;
+    }
+
+    /* 流れの記事と画像を縦に　*/
+    .flow-contents {
+        display: flex;
+        flex-direction: column;
+        align-items: normal;
+    }
+
+    .flow-article p {
+        width: 100%;
+    }
+
+    .flow-image img{
+        width: -webkit-fill-available;
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 5vh;
+    }
+
+
 }
 
-/*iphonの縦, SXMAXが414とのこと*/
-@media (max-width: 450px) {
+/* small iphonの縦, SXMAXが414とのこと*/
+@media (max-width: 640px) {
+
+    /* ヘッダー全体*/
+    .header-wrap {
+        letter-spacing: 1.5px;
+        margin-top: 1.5vh;
+    }
+
+    .header-logo {
+        margin-left: 1vm;
+
+        font-size: 1.5em;
+    }
+
+    /* 内容全体　*/
+    .main-wrap {
+        margin: 4em 3.5em;
+    }
+
+    /* contact　*/
+    .contact-wrap {
+        margin: 4em 3.5em;
+    }
+
+
     
+
 }
+
+/*次にヘッダーがずれる大きさ*/
+@media (max-width: 623px) {
+    .header-contents{
+        display: none;
+    }
+
+}
+
+
+/*機器はないけどヘッダーがずれるので余裕暇なときに間のpxうめる*/

@@ -90,6 +90,7 @@ header {
 .article-contents {
     display: flex;
     width: 80vw;
+    align-items: center;
 }
 
 .flow-contents {
