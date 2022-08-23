@@ -20,8 +20,8 @@
     }
 }
 
-/* mideam iphonSX MAX の縦幅=>横にしてみたときの幅*/
-@media (max-width: 896px) {
+/* mideam 普通は896 iphonSX MAX の縦幅=>横にしてみたときの幅*/
+@media (max-width: 996px) {
 
     /* 一番上ヘッダー上タイトル　クラス名変えたほうがいい*/
     .header-logo {
@@ -72,8 +72,8 @@
 
 }
 
-/* small iphonの縦, SXMAXが414とのこと*/
-@media (max-width: 640px) {
+/* small 普通は640 iphonの縦, SXMAXが414とのこと*/
+@media (max-width: 731px) {
 
     /* ヘッダー全体*/
     .header-wrap {
