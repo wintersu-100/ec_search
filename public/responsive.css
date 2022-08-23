@@ -165,6 +165,10 @@
         padding-right: 10px;
     }
 
+    th {
+        white-space: nowrap;
+    }
+
     
 /* 都道府県のとこ */
     .area {
