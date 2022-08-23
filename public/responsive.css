@@ -108,6 +108,67 @@
         display: none;
     }
 
+    /* 病院・薬局検索のタブ */
+    .tab {
+        padding-left: 0;
+    }
+
+}
+
+/* 北海道がずれるところ */
+@media (max-width: 522px) {
+    .header-wrap {
+        margin-top: 0;
+    }
+    .header-logo {
+        margin-left: 0;
+    }
+    
+    .main-wrap{
+        margin: 4em 2em;
+    }
+
+    .contact-title {
+        padding-top: 0;
+    }
+
+}
+
+@media (max-width: 474px) {
+    
+    .main-wrap{
+        margin: 4em 1em;
+    }
+
+}
+
+@media (max-width: 474px) {
+    
+    .main-wrap{
+        margin-right: 0em;
+
+
+}
+
+/* スマホ */
+@media (max-width: 427px) {
+    
+    .main-wrap{
+        margin-right: 0em;
+    }
+
+    /* 病院・薬局検索のタブ */
+    .tab li a{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    
+/* 都道府県のとこ */
+    .area {
+        padding: 20px 5px;
+    }
+
 }
 
 
