@@ -28,11 +28,6 @@
         font-size: 1.5em;
     }
 
-    /*ヘッダー右コンテンツのかたまり*/
-    .header-contents {
-        
-    }
-
     /*ヘッダー右コンテンツそれぞれ*/
     .header-content {
         margin: 0;
@@ -87,7 +82,7 @@
         font-size: 1.5em;
     }
 
-    /* 内容全体　*/
+    /* 内容全体　wrapの横をcontact-wrap、タイトルと合わせる　*/
     .main-wrap {
         margin: 4em 3.5em;
     }
@@ -128,6 +123,10 @@
         margin: 4em 2em;
     }
 
+    .contact-wrap {
+        margin: 4em 2em;
+    }
+
     .contact-title {
         padding-top: 0;
     }
@@ -141,6 +140,10 @@
     }
 
     .main-wrap{
+        margin-right: 0em;
+    }
+
+    .contact-wrap {
         margin-right: 0em;
     }
 
