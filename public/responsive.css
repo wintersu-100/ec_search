@@ -28,11 +28,6 @@
         font-size: 1.5em;
     }
 
-    /*ヘッダー右コンテンツのかたまり*/
-    .header-contents {
-        
-    }
-
     /*ヘッダー右コンテンツそれぞれ*/
     .header-content {
         margin: 0;
@@ -87,7 +82,7 @@
         font-size: 1.5em;
     }
 
-    /* 内容全体　*/
+    /* 内容全体　wrapの横をcontact-wrap、タイトルと合わせる　*/
     .main-wrap {
         margin: 4em 3.5em;
     }
@@ -106,6 +101,81 @@
 @media (max-width: 623px) {
     .header-contents{
         display: none;
+    }
+
+    /* 病院・薬局検索のタブ */
+    .tab {
+        padding-left: 0;
+    }
+
+}
+
+/* 北海道がずれるところ */
+@media (max-width: 522px) {
+    .header-wrap {
+        margin-top: 0;
+    }
+    .header-logo {
+        margin-left: 0;
+    }
+    
+    .main-wrap{
+        margin: 4em 2em;
+    }
+
+    .contact-wrap {
+        margin: 4em 2em;
+    }
+
+    .contact-title {
+        padding-top: 0;
+    }
+
+}
+
+@media (max-width: 474px) {
+    
+    .main-wrap{
+        margin: 4em 1em;
+    }
+
+    .main-wrap{
+        margin-right: 0em;
+    }
+
+    .contact-wrap {
+        margin-right: 0em;
+    }
+
+    .flow-contents {
+        width: 100%;
+    }
+
+}
+
+
+
+/* スマホ */
+@media (max-width: 427px) {
+    
+    .main-wrap{
+        margin-right: 0em;
+    }
+
+    /* 病院・薬局検索のタブ */
+    .tab li a{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    
+/* 都道府県のとこ */
+    .area {
+        padding: 20px 5px;
     }
 
 }
