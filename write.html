@@ -116,6 +116,14 @@
             
             <div style="display: block; margin: auto;" id="map"></div>
             <div style="text-align: center;"><p>※読み込みに時間がかかる場合がございます。</p></div>
+            <div>
+              <button id="btnPause">
+                再開する
+              </button>
+              <button id="btnResume">
+                停止する
+              </button>
+            </div>
 
             <!--避妊薬の種類は作成後公開、今は隠す ヘッダーも-->
             <div id="kinds" hidden>
@@ -200,39 +208,18 @@
 
         const loadEl = document.querySelector('#load');
 
-        /*
-        このあたりから
-        */
+        document.getElementById('btnPause').onclick = function(){
+          paused = true
+        }
 
-        for (var i=0;i<=5;i++){
-          console.log(i);
-          setTimeout(write.bind(null,i), 8000*i);
+        document.getElementById('btnResume').onclick = function(){
+          paused = false
         }
+
+        let paused = true
+        var i=0;
+
         
-        function write(num){
-          firebase.database().ref("/hsp_off/"+num).once('value', snapshot => {
-            service.findPlaceFromQuery({
-                query: snapshot.name+" "+snapshot.pref,
-                fields: ['geometry', 'place_id','name']
-              }, function(results,status){
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  console.log(snapshot.name);
-                  console.log(results[0].name);
-                  firebase.database().ref("/hsp_off/"+num).update({
-                    place_id:results[0].place_id,
-                    geometry:{
-                      lat:results[0].geometry.location.lat(),
-                      lng:results[0].geometry.location.lng()
-                    }
-                  });
-                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
-                  setTimeout(write.bind(null, num), 5000);
-                }else{
-                  console.log(status);
-                }
-              });
-          });
-        }
 
         function initMap() {
           firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
@@ -244,6 +231,42 @@
               zoom:9.7
             });
           });
+
+          const id_writing=setInterval(write.bind(null), 5000);
+          
+        
+        function write(){
+          if(paused){
+          var service = new google.maps.places.PlacesService(map);
+          firebase.database().ref("/hsp_off/"+i).once('value', snap => {
+            var abc=snap.val();
+            service.findPlaceFromQuery({
+                query: abc.name+" "+abc.pref,
+                fields: ['geometry', 'place_id','name']
+              }, function(results,status){
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                  console.log(abc.name);
+                  console.log(results[0].name);
+                  firebase.database().ref("/hsp_off/"+i).update({
+                    place_id:results[0].place_id,
+                    geometry:{
+                      lat:results[0].geometry.location.lat(),
+                      lng:results[0].geometry.location.lng()
+                    }
+                  });
+                  i++;
+                  if(i>5){
+                    clearInterval(id_writing)
+                  }
+                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
+                  setTimeout(write.bind(null), 5000);
+                }else{
+                  console.log(status);
+                }
+              });
+          });
+        }
+        }
     
           if(map_p=="hsp_off" || map_p=="hsp_on"){
             //find_hsp();

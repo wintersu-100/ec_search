@@ -52,8 +52,8 @@
     
     <style>
     /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-    #map {height: 500px;
-          width: 800px;
+    #map {height: 70vh;
+          width: 85vw;
         }
     </style>
         
@@ -74,12 +74,7 @@
             <div class="header-contents">
         
                 <div class="header-content btn" >
-                    <a class="no_underline" href="#address">エリア検索</a>
-                </div>
-        
-                <!--避妊薬の種類は作成後公開、今は隠す-->
-                <div class="header-content btn" hidden>
-                    <a class="no_underline" href="#kinds">避妊薬の種類</a>
+                    <a class="no_underline" href="index.html#address">エリア検索</a>
                 </div>
 
                 <div class="header-content btn">
@@ -114,34 +109,7 @@
             <div style="text-align: center;"><p>※読み込みに時間がかかる場合がございます。</p></div>
             <div style="display: block; margin: auto;" id="map"></div>
 
-            <!--避妊薬の種類は作成後公開、今は隠す ヘッダーも-->
-            <div id="kinds" hidden>
-                <div class="article-title">
-                    <h3>緊急避妊薬の種類</h3>
-                </div>
-    
-                <div class="article-contents kinds-lists">
-                    <div class="kinds-list">
-                        <div class="philosophies">
-                            <h4>1. メゲない　</h4><!--この空白により縦が揃って見える神業、今は消さない-->
-                        </div>
-                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641742-efc3b400-2ce3-11ea-9f63-381a4a4e3e68.PNG" alt="Ganko_1">
-                    </div>
-                    <div class="kinds-list">
-                        <div class="philosophies">
-                            <h4>2. ショゲない　</h4>
-                        </div>
-                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641740-ef2b1d80-2ce3-11ea-9a4d-a40a74f5fec8.PNG" alt="Ganko_2">
-                    </div>
-                    <div class="kinds-list">
-                        <div class="philosophies">
-                            <h4>3. ないちゃだめ</h4>
-                        </div>
-                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641741-efc3b400-2ce3-11ea-986c-4623599f70c3.PNG" alt="Ganko_3">
-                    </div>
-                </div>
-            </div>
-    
+           
         </div>
 
     </div>
