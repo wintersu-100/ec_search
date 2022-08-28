@@ -195,7 +195,7 @@
         // URLSearchParamsオブジェクトを取得
         const params = url.searchParams;
         // パラメータから「username」を取得
-        const map_p = "hsp_off"; //都度都度変更する
+        const map_p = "pha"; //都度都度変更する
         const pref_p=params.get("pref");
 
         if (map_p=="hsp_off"){
@@ -217,9 +217,9 @@
         }
 
         let paused = true
-        var i=0;
+        var i=5070;
 
-        
+        //番号が飛んだ時の例外処理     
 
         function initMap() {
           firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
@@ -232,36 +232,41 @@
             });
           });
 
-          const id_writing=setInterval(write.bind(null), 5000);
-          
+          const id_writing=setInterval(write.bind(null), 2000);
         
         function write(){
           if(paused){
           var service = new google.maps.places.PlacesService(map);
-          firebase.database().ref("/hsp_off/"+i).once('value', snap => {
+          firebase.database().ref("/pha/"+i).once('value', snap => {
             var abc=snap.val();
             service.findPlaceFromQuery({
-                query: abc.name+" "+abc.pref,
+                query: abc.name+" "+abc.pref+" "+abc.add,
                 fields: ['geometry', 'place_id','name']
               }, function(results,status){
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
+                  console.log(i);
                   console.log(abc.name);
                   console.log(results[0].name);
-                  firebase.database().ref("/hsp_off/"+i).update({
+                  console.log("-----");
+                  firebase.database().ref("/pha/"+i).update({
                     place_id:results[0].place_id,
+                    name_search:results[0].name,
                     geometry:{
                       lat:results[0].geometry.location.lat(),
                       lng:results[0].geometry.location.lng()
                     }
                   });
                   i++;
-                  if(i>5){
+                  if(i>7250){
                     clearInterval(id_writing)
                   }
                 }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
                   setTimeout(write.bind(null), 5000);
                 }else{
+                  console.log(i);
                   console.log(status);
+                  console.log("-----");
+                  i++;
                 }
               });
           });
