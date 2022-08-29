@@ -146,238 +146,137 @@
     </footer>
 
     <script>
-        var map;
-        // URLを取得
-        const url = new URL(window.location.href);
-        // URLSearchParamsオブジェクトを取得
-        const params = url.searchParams;
-        // パラメータから「username」を取得
-        const map_p = params.get("map");
-        const pref_p=params.get("pref");
+      var map;
+      // URLを取得
+      const url = new URL(window.location.href);
+      // URLSearchParamsオブジェクトを取得
+      const params = url.searchParams;
+      // パラメータから「username」を取得
+      const map_p = params.get("map");
+      const pref_p=params.get("pref");
 
-        if (map_p=="hsp_off"){
-            document.getElementById('map_title').innerHTML = "病院（対面）" ;
-        }else if(map_p=="hsp_on"){
-            document.getElementById('map_title').innerHTML = "病院（オンライン）" ;
-        }else{
-            document.getElementById('map_title').innerHTML = "薬局" ;
-        }
-    
-        const loadEl = document.querySelector('#load');
-    
-        function initMap() {
-          firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
-     
-            const pref_data=snapshot.val();
-            var lati =pref_data.lat;
-            var lngi =pref_data.lng;
-    
-            map = new google.maps.Map(document.getElementById('map'), {
-              center: new google.maps.LatLng( lati, lngi, false ),
-              zoom:9.7
+      if (map_p=="hsp_off"){
+          document.getElementById('map_title').innerHTML = "病院（対面）" ;
+      }else if(map_p=="hsp_on"){
+          document.getElementById('map_title').innerHTML = "病院（オンライン）" ;
+      }else{
+          document.getElementById('map_title').innerHTML = "薬局" ;
+      }
+  
+      const loadEl = document.querySelector('#load');
+
+      var prev_infowindow =false; 
+  
+      function initMap() {
+        firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: new google.maps.LatLng({lat: snapshot.val().lat, lng: snapshot.val().lng}),
+            zoom:9.7
+          });    
+        });
+
+        map_custom();
+      
+        function map_custom(){
+          firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snap => {
+            snap.forEach(function(childNodes){
+              if(childNodes.val().place_id!=undefined){
+                make_maker(childNodes.val());
+              }
+            })
+          });
+        };
+      
+        function make_maker(df){
+          //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
+          var infowindow = new google.maps.InfoWindow();
+          //PlacesService のインスタンスの生成（引数に map を指定）
+          var service = new google.maps.places.PlacesService(map);
+
+          marker = new google.maps.Marker({ // マーカーの追加
+            position: new google.maps.LatLng({lat: df.geometry.lat, lng: df.geometry.lng}), // マーカーを立てる位置を指定
+            map: map // マーカーを立てる地図を指定
+          });
+
+          marker.addListener('click', function() {
+            if( prev_infowindow){
+              prev_infowindow.close();
+            }
+            service.getDetails({
+              placeId: df.place_id,
+              fields: ['name','adr_address','formatted_phone_number','url','opening_hours','website']
+            },function(req, res){
+              if (res == google.maps.places.PlacesServiceStatus.OK) {
+                var place_name=req.name;
+                var place_add=req.adr_address.substr(req.adr_address.indexOf('、') + 1);
+                var place_open;
+                var place_phone;
+                var place_url;
+                var content;
+
+                if(req.formatted_phone_number==undefined){
+                  place_phone="未登録";
+                }else{
+                  place_phone=req.formatted_phone_number;
+                }
+                
+                if(req.website==undefined){
+                  place_url=req.url;
+                }else{
+                  place_url=req.website;
+                }              
+
+                if(req.opening_hours==undefined){
+                  place_open='未登録';
+                  content=`
+                  <div style="margin:20px; margin-bottom:20px;">
+                    <h3><a href=${place_url}>${place_name}</a></h3>
+                    <p><b>住所:</b>${place_add}</p>
+                    <p><b>電話番号:</b>${place_phone}</p>
+                    <p><b>開業時間:</b>${place_open}<br/></p>
+                  </div>
+                  `;
+                }else{
+                  place_open=req.opening_hours.weekday_text;
+                  content=`
+                  <div style="margin:20px; margin-bottom:20px;">
+                    <h3><a href=${place_url}>${place_name}</a></h3>
+                    <p><b>住所:</b>${place_add}</p>
+                    <p><b>電話番号:</b>${place_phone}</p>
+                    <p><b>開業時間:</b><br/>
+                      ${place_open[0]}<br/>
+                      ${place_open[1]}<br/>
+                      ${place_open[2]}<br/>
+                      ${place_open[3]}<br/>
+                      ${place_open[4]}<br/>
+                      ${place_open[5]}<br/>
+                      ${place_open[6]}<br/>
+                    </p>
+                  </div>
+                  `;
+                }
+                infowindow.setContent(content);  //results[i].name
+              }
             });
-    
-          });
-    
-          if(map_p=="hsp_off" || map_p=="hsp_on"){
-            find_hsp();
-          }else{
-            find_pha();
-          }
-    
-        }      
-    
-        function find_hsp(){
-          firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snapshot => {
-            
-            //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
-            var infowindow = new google.maps.InfoWindow();
-            //PlacesService のインスタンスの生成（引数に map を指定）
-            var service = new google.maps.places.PlacesService(map);
-    
-            var i=0;
-    
-            snapshot.forEach(function(childNodes){ 
-              setTimeout(mapping.bind(null, childNodes.val()), 300*i);
-              i++;
-            });    
-               
-            function mapping(df){
-              service.findPlaceFromQuery({
-                query: df.name+" "+pref_p,
-                fields: ['geometry', 'place_id']
-              }, function(results, status) {
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  createMarker(results[0]);
-                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
-                  setTimeout(mapping.bind(null, df), 1000);
-                }
-              });
-            }
-    
-            function createMarker(place) {
-              //var placeLoc = place.geometry.location;
-              var marker = new google.maps.Marker({
-                map: map,
-                position: place.geometry.location  //results[i].geometry.location
-              });          
-    
-              marker.addListener('click', function() {
-                service.getDetails({
-                  placeId: place.place_id,
-                  fields: ['name',
-                           'adr_address',  
-                           'url',
-                           'opening_hours',
-                           'formatted_phone_number',
-                           'website']
-                }, function(req, res) {
-                  if (res == google.maps.places.PlacesServiceStatus.OK) {
-    
-                    var place_name=req.name;
-                    var place_add=req.adr_address.substr(req.adr_address.indexOf('、') + 1);
-                    var place_open="";
-                    var place_phone="";
-                    var place_url=req.website;
-    
-                    place_photo=req.photo;
-                    place_open=req.opening_hours.weekday_text;
-                    place_phone=req.formatted_phone_number;
-                    if(place_url==undefined){
-                      place_url=req.url;
-                    }
-    
-                    var content=`
-                    <div style="margin:20px; margin-bottom:20px;">
-                      <h3><a href=${place_url}>${place_name}</a></h3>
-                      <p><b>住所:</b>${place_add}</p>
-                      <p><b>電話番号:</b>${place_phone}</p>
-                      <p><b>開業時間:</b><br/>
-                        ${place_open[0]}<br/>
-                        ${place_open[1]}<br/>
-                        ${place_open[2]}<br/>
-                        ${place_open[3]}<br/>
-                        ${place_open[4]}<br/>
-                        ${place_open[5]}<br/>
-                        ${place_open[6]}<br/>
-                        </p>
-                    </div>
-                    `;
-    
-                    infowindow.setContent(content);  //results[i].name
-                  }
-                });
-                
-                infowindow.open(map, this);
-                
-              });
-            }
-          }); 
-        }    
-    
-        function find_pha(){
-          firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snapshot => {
-            
-            //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
-            var infowindow = new google.maps.InfoWindow();
-            //PlacesService のインスタンスの生成（引数に map を指定）
-            var service = new google.maps.places.PlacesService(map);
-    
-            var i=0;
-    
-            snapshot.forEach(function(childNodes){ 
-              setTimeout(mapping.bind(null, childNodes.val()), 300*i);
-              i++;
-            });    
-               
-            function mapping(df){
-              service.findPlaceFromQuery({
-                query: pref_p+" "+df.name+" "+df.add,
-                fields: ['geometry', 'place_id']
-              }, function(results, status) {
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  createMarker(results[0]);
-                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
-                  setTimeout(mapping.bind(null, df), 1000);
-                }
-              });
-            }
-    
-            function createMarker(place) {
-              //var placeLoc = place.geometry.location;
-              var marker = new google.maps.Marker({
-                map: map,
-                position: place.geometry.location  //results[i].geometry.location
-              });          
-    
-              marker.addListener('click', function() {
-                service.getDetails({
-                  placeId: place.place_id,
-                  fields: ['name',
-                           'adr_address',  
-                           'url',
-                           'opening_hours',
-                           'formatted_phone_number',
-                           'website']
-                }, function(req, res) {
-                  if (res == google.maps.places.PlacesServiceStatus.OK) {
-    
-                    var place_name=req.name;
-                    var place_add=req.adr_address.substr(req.adr_address.indexOf('、') + 1);
-                    var place_open="";
-                    var place_phone="";
-                    var place_url=req.website;
-    
-                    place_photo=req.photo;
-                    place_open=req.opening_hours.weekday_text;
-                    place_phone=req.formatted_phone_number;
-                    if(place_url==undefined){
-                      place_url=req.url;
-                    }
-    
-                    var content=`
-                    <div style="margin:20px; margin-bottom:20px;">
-                      <h3><a href=${place_url}>${place_name}</a></h3>
-                      <p><b>住所:</b>${place_add}</p>
-                      <p><b>電話番号:</b>${place_phone}</p>
-                      <p><b>開業時間:</b><br/>
-                        ${place_open[0]}<br/>
-                        ${place_open[1]}<br/>
-                        ${place_open[2]}<br/>
-                        ${place_open[3]}<br/>
-                        ${place_open[4]}<br/>
-                        ${place_open[5]}<br/>
-                        ${place_open[6]}<br/>
-                        </p>
-                    </div>
-                    `;
-    
-                    infowindow.setContent(content);  //results[i].name
-                  }
-                });
-                
-                infowindow.open(map, this);
-                
-              });
-            }
-    
+            prev_infowindow = infowindow;
+            infowindow.open(map, this);
           });
         }
-    
-        try {
-            let app = firebase.app();
-            let features = [
-                'database', 
-                'analytics', 
-            ].filter(feature => typeof app[feature] === 'function');
-            loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-            console.error(e);
-            loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-          
-        </script>    
-        <script src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyD6hZ942p4MWPSCEYnoUaCqU_3tMf_V7P8&callback=initMap&libraries=places" async defer ></script>
+      } 
+  
+      try {
+          let app = firebase.app();
+          let features = [
+              'database', 
+              'analytics', 
+          ].filter(feature => typeof app[feature] === 'function');
+          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+          console.error(e);
+          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+      }
+    </script>    
+    <script src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyD6hZ942p4MWPSCEYnoUaCqU_3tMf_V7P8&callback=initMap&libraries=places" async defer ></script>
     
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
