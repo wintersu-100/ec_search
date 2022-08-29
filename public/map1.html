@@ -4,13 +4,14 @@
   <head>
     <!--<link rel="stylesheet" href="style_map.css">-->
     <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="responsive.css">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
     <link href="https://fonts.googleapis.com/css?family=Lato:700,900|Noto+Sans+JP:400,700&display=swap&subset=japanese" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
-    <title>ec_pill_search</title>
+    <title>ピル・緊急避妊薬検索サイト</title>
 
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
 
@@ -51,8 +52,8 @@
     
     <style>
     /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-    #map {height: 500px;
-          width: 800px;
+    #map {height: 70vh;
+          width: 85vw;
         }
     </style>
         
@@ -67,22 +68,13 @@
         <div class="header-wrap">
 
             <div class="header-logo btn">
-                <h3><a class="no_underline" href="#top">EC Search</a></h3>
+              <h3><a class="no_underline" href="index.html#top">緊急避妊薬検索サイト</a></h3>
             </div>
 
             <div class="header-contents">
-            
-                <div class="header-content btn" hidden>
-                    <a class="no_underline" href="#flow">処方までの流れ</a>
-                </div>
         
                 <div class="header-content btn" >
-                    <a class="no_underline" href="#address">エリア検索</a>
-                </div>
-        
-                <!--避妊薬の種類は作成後公開、今は隠す-->
-                <div class="header-content btn" hidden>
-                    <a class="no_underline" href="#kinds">避妊薬の種類</a>
+                    <a class="no_underline" href="index.html#address">エリア検索</a>
                 </div>
 
                 <div class="header-content btn">
@@ -114,45 +106,10 @@
                 </div>
             </div>
             
-            <div style="display: block; margin: auto;" id="map"></div>
             <div style="text-align: center;"><p>※読み込みに時間がかかる場合がございます。</p></div>
-            <div>
-              <button id="btnPause">
-                再開する
-              </button>
-              <button id="btnResume">
-                停止する
-              </button>
-            </div>
+            <div style="display: block; margin: auto;" id="map"></div>
 
-            <!--避妊薬の種類は作成後公開、今は隠す ヘッダーも-->
-            <div id="kinds" hidden>
-                <div class="article-title">
-                    <h3>緊急避妊薬の種類</h3>
-                </div>
-    
-                <div class="article-contents kinds-lists">
-                    <div class="kinds-list">
-                        <div class="philosophies">
-                            <h4>1. メゲない　</h4><!--この空白により縦が揃って見える神業、今は消さない-->
-                        </div>
-                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641742-efc3b400-2ce3-11ea-9f63-381a4a4e3e68.PNG" alt="Ganko_1">
-                    </div>
-                    <div class="kinds-list">
-                        <div class="philosophies">
-                            <h4>2. ショゲない　</h4>
-                        </div>
-                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641740-ef2b1d80-2ce3-11ea-9a4d-a40a74f5fec8.PNG" alt="Ganko_2">
-                    </div>
-                    <div class="kinds-list">
-                        <div class="philosophies">
-                            <h4>3. ないちゃだめ</h4>
-                        </div>
-                        <img width="400px" src="https://user-images.githubusercontent.com/58355407/71641741-efc3b400-2ce3-11ea-986c-4623599f70c3.PNG" alt="Ganko_3">
-                    </div>
-                </div>
-            </div>
-    
+           
         </div>
 
     </div>
@@ -195,7 +152,7 @@
         // URLSearchParamsオブジェクトを取得
         const params = url.searchParams;
         // パラメータから「username」を取得
-        const map_p = "hsp_off"; //都度都度変更する
+        const map_p = params.get("map");
         const pref_p=params.get("pref");
 
         if (map_p=="hsp_off"){
@@ -205,83 +162,112 @@
         }else{
             document.getElementById('map_title').innerHTML = "薬局" ;
         }
-
-        const loadEl = document.querySelector('#load');
-
-        document.getElementById('btnPause').onclick = function(){
-          paused = true
-        }
-
-        document.getElementById('btnResume').onclick = function(){
-          paused = false
-        }
-
-        let paused = true
-        var i=1551;
-
-        //番号が飛んだ時の例外処理     
-
-        function initMap() {
-          firebase.database().ref("/hsp_off/"+pref_p).once('value', snapshot => {
-            const pref_data=snapshot.val();
-            var lati =pref_data.lat;
-            var lngi =pref_data.lng;
-            map = new google.maps.Map(document.getElementById('map'), {
-              center: new google.maps.LatLng( lati, lngi, false ),
-              zoom:9.7
-            });
-          });
-
-          const id_writing=setInterval(write.bind(null), 2000);
-        
-        function write(){
-          if(paused){
-          var service = new google.maps.places.PlacesService(map);
-          firebase.database().ref("/hsp_off/"+i).once('value', snap => {
-            var abc=snap.val();
-            service.findPlaceFromQuery({
-                query: abc.name+" "+abc.pref,
-                fields: ['geometry', 'place_id','name']
-              }, function(results,status){
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  console.log(i);
-                  console.log(abc.name);
-                  console.log(results[0].name);
-                  console.log("-----");
-                  firebase.database().ref("/hsp_off/"+i).update({
-                    place_id:results[0].place_id,
-                    name_search:results[0].name,
-                    geometry:{
-                      lat:results[0].geometry.location.lat(),
-                      lng:results[0].geometry.location.lng()
-                    }
-                  });
-                  i++;
-                  if(i>3093){
-                    clearInterval(id_writing)
-                  }
-                }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
-                  setTimeout(write.bind(null), 5000);
-                }else{
-                  console.log(i);
-                  console.log(status);
-                  console.log("-----");
-                  i++;
-                }
-              });
-          });
-        }
-        }
     
-          if(map_p=="hsp_off" || map_p=="hsp_on"){
-            //find_hsp();
-          }else{
-            //find_pha();
+        const loadEl = document.querySelector('#load');
+    
+        function initMap() {
+          firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
+    
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: new google.maps.LatLng({lat: snapshot.val().lat, lng: snapshot.val().lng}),
+              zoom:9.7
+            });    
+
+          });
+
+          //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
+          var infowindow = new google.maps.InfoWindow();
+          //PlacesService のインスタンスの生成（引数に map を指定）
+          var service = new google.maps.places.PlacesService(map);
+
+          map_custom();
+        
+          function map_custom(){
+            firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snap => {
+              snap.forEach(function(childNodes){
+                if(childNodes.val().place_id!=undefined){
+                  make_maker(childNodes.val());
+                }
+              })
+            });
+          };
+        
+          function make_maker(df){
+            marker = new google.maps.Marker({ // マーカーの追加
+              position: new google.maps.LatLng({lat: df.geometry.lat, lng: df.geometry.lng}), // マーカーを立てる位置を指定
+              map: map // マーカーを立てる地図を指定
+            });
+
+            marker.addListener('click', function(event) {
+            service.getDetails({
+              placeId: df.place_id,
+              fields: ['name',
+                       'adr_address',  
+                       'url',
+                       'opening_hours',
+                       'website'
+                      ]
+            },function(req, res){
+            if (res == google.maps.places.PlacesServiceStatus.OK) {
+              var place_name=req.name;
+              var place_add=req.adr_address.substr(req.adr_address.indexOf('、') + 1);
+              var place_open="";
+              var place_phone="";
+              var place_url=req.website;
+
+              place_open=req.opening_hours.weekday_text;
+              place_phone=req.formatted_phone_number;
+              if(place_url==undefined){
+                place_url=req.url;
+              }
+
+              var content=`
+              <div style="margin:20px; margin-bottom:20px;">
+                <h3><a href=${place_url}>${place_name}</a></h3>
+                <p><b>住所:</b>${place_add}</p>
+                <p><b>電話番号:</b>${place_phone}</p>
+                <p><b>開業時間:</b><br/>
+                  ${place_open[0]}<br/>
+                  ${place_open[1]}<br/>
+                  ${place_open[2]}<br/>
+                  ${place_open[3]}<br/>
+                  ${place_open[4]}<br/>
+                  ${place_open[5]}<br/>
+                  ${place_open[6]}<br/>
+                </p>
+              </div>
+              `;
+
+              infowindow.setContent(content);  //results[i].name
+            }
+            });
+            infowindow.open(map, this);
+          });
           }
-        }      
+        
+          function set_infowindow(id)
+
+          /*
+          if(map_p=="hsp_off" || map_p=="hsp_on"){
+            find_hsp();
+          }else{
+            find_pha();
+          }
+          */
+    
+        }
+
+        
+
+
+
+
+
+        
+        
     
         function find_hsp(){
-          firebase.database().ref("/pref_off/三重県").once('value', snapshot => {
+          firebase.database().ref("/"+map_p).orderByChild("pref").startAt(pref_p).endAt(pref_p).once('value', snapshot => {
             
             //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
             var infowindow = new google.maps.InfoWindow();
@@ -289,29 +275,21 @@
             var service = new google.maps.places.PlacesService(map);
     
             var i=0;
-            var j=0;
+    
+            snapshot.forEach(function(childNodes){ 
+              setTimeout(mapping.bind(null, childNodes.val()), 300*i);
+              i++;
+            });    
                
             function mapping(df){
-              console.log(df);
               service.findPlaceFromQuery({
-                query: df.name+" 北海道",
-                fields: ['geometry', 'place_id','name']
+                query: df.name+" "+pref_p,
+                fields: ['geometry', 'place_id']
               }, function(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  console.log(results[0].geometry);
-                  console.log(df.name);
-                  console.log(results[0].name);
-                  firebase.database().ref("/pref_off/三重県").update({
-                    place_id:results[0].place_id,
-                    geometry:{
-                      lat:results[0].geometry.location.lat(),
-                      lng:results[0].geometry.location.lng()
-                    }
-                  });
+                  createMarker(results[0]);
                 }else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT){
                   setTimeout(mapping.bind(null, df), 1000);
-                }else{
-                  console.log(status);
                 }
               });
             }
