@@ -198,7 +198,7 @@
               map: map // マーカーを立てる地図を指定
             });
 
-            marker.addListener('click', function(event) {
+            marker.addListener('click', function() {
             service.getDetails({
               placeId: df.place_id,
               fields: ['name',
@@ -244,9 +244,7 @@
             infowindow.open(map, this);
           });
           }
-        
-          function set_infowindow(id)
-
+          
           /*
           if(map_p=="hsp_off" || map_p=="hsp_on"){
             find_hsp();

@@ -195,7 +195,7 @@
         // URLSearchParamsオブジェクトを取得
         const params = url.searchParams;
         // パラメータから「username」を取得
-        const map_p = "hsp_off"; //都度都度変更する
+        const map_p ="hsp_off"; //都度都度変更する
         const pref_p=params.get("pref");
 
         if (map_p=="hsp_off"){
@@ -217,12 +217,12 @@
         }
 
         let paused = true
-        var i=1551;
+        var i=3052;
 
         //番号が飛んだ時の例外処理     
 
         function initMap() {
-          firebase.database().ref("/hsp_off/"+pref_p).once('value', snapshot => {
+          firebase.database().ref("/pref_off/"+pref_p).once('value', snapshot => {
             const pref_data=snapshot.val();
             var lati =pref_data.lat;
             var lngi =pref_data.lng;
