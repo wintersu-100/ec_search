@@ -2,7 +2,8 @@
     color: #313131;
     box-sizing: border-box;
     margin: 0px;  /*こいつ...*/
-    font-family: Lato, Noto Sans JP;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 
