@@ -2,8 +2,8 @@
 
 deployする方法（Vscodeの場合）
 --
-1.ローカルディレクトリにgithub上のファイルを同期させる
-2.ターミナルを開く
+- 1.ローカルディレクトリにgithub上のファイルを同期させる
+- 2.ターミナルを開く
 3.ターミナルに"npm install -g firebase-tools"を入れて実行
 4.i  "Firebase optionally collects CLI usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you.
 ? Allow Firebase to collect CLI usage and error reporting information? (Y/n)"という文章が出たらyesを入力
