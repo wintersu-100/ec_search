@@ -14,3 +14,7 @@ deployする方法（Vscodeの場合）
 9.  ターミナルに"firebase deploy --only hosting"を入れて実行
 10. githubにあげないファイルを忘れてプッシュしないうちに消しておく
 --
+1_1
+ke_1_1
+ka _1
+ka _1_ 
